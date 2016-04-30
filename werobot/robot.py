@@ -152,11 +152,14 @@ class BaseRoBot(object):
         @key_click('KEYNAME') for special key on click event
         """
         def wraps(f):
+            # 获取函数参数的个数
             argc = len(inspect.getargspec(f).args)
 
             @self.click
             def onclick(message, session=None):
                 if message.key == key:
+                    # [:argc]的作用就是
+                    # 被warps的函数有几个参数, 那么就传给它几个
                     return f(*[message, session][:argc])
             return f
 
